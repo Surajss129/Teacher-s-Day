@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Teacher's Day!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      background: #ffffff;
+    }
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    header {
+      position: relative;
+      z-index: 1;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    header h1 {
+      font-size: 3rem;
+      color: #333;
+      margin-bottom: 1rem;
+      animation: glow 2s infinite alternate;
+    }
+    header p {
+      font-size: 1.2rem;
+      color: #666;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #f0f, 0 0 10px #ff8; }
+      to { text-shadow: 0 0 20px #ff0, 0 0 30px #f08; }
+    }
+
+    canvas#confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✨ Particles Background -->
+  <div id="particles-js"></div>
+
+  <!-- 🎉 Confetti Canvas -->
+  <canvas id="confetti"></canvas>
+
+  <!-- 🎤 Welcome Message -->
+  <header>
+    <h1>Happy Teacher's Day! 🎓</h1>
+    <p>Thank you for being the light that guides us always.</p>
+  </header>
+
+  <!-- 🌟 Scripts -->
+  <!-- particles.js CDN -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+  <!-- particles.js config -->
+  <script>
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#ff4081" },
+        shape: {
+          type: "circle",
+          stroke: { width: 0, color: "#000000" },
+        },
+        opacity: {
+          value: 0.5,
+          random: true,
+          anim: { enable: false }
+        },
+        size: {
+          value: 4,
+          random: true,
+          anim: { enable: false }
+        },
+        move: {
+          enable: true,
+          speed: 1.2,
+          direction: "none",
+          out_mode: "out"
+        }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: { enable: true, mode: "repulse" },
+          onclick: { enable: false }
+        }
+      },
+      retina_detect: true
+    });
+  </script>
+
+  <!-- 🎉 Confetti Script -->
+  <script>
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const confetti = [];
+    for (let i = 0; i < 300; i++) {
+      confetti.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        r: Math.random() * 6 + 2,
+        d: Math.random() * 5 + 2,
+        color: `hsl(${Math.random() * 360}, 100%, 60%)`,
+        tilt: Math.random() * 10 - 5
+      });
+    }
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confetti.forEach(c => {
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+        ctx.fillStyle = c.color;
+        ctx.fill();
+      });
+      updateConfetti();
+    }
+
+    function updateConfetti() {
+      confetti.forEach(c => {
+        c.y += c.d;
+        c.x += Math.sin(c.tilt);
+        if (c.y > canvas.height) {
+          c.y = -10;
+          c.x = Math.random() * canvas.width;
+        }
+      });
+    }
+
+    function animateConfetti() {
+      drawConfetti();
+      requestAnimationFrame(animateConfetti);
+    }
+
+    animateConfetti();
+  </script>
+
+</body>
+</html>
